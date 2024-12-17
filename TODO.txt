@@ -1,0 +1,2 @@
+the character keeps playing until her runs out of stamina or he is paused
+the map changes for the user when all the chests are destroyed.

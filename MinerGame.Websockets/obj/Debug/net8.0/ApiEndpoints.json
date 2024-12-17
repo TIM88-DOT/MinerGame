@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "MiningGame.WebSockets.Controllers.GameController",
+    "Method": "GetGameState",
+    "RelativePath": "api/Game/state",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

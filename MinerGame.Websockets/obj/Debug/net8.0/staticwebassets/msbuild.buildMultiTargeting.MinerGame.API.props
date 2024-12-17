@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\MinerGame.API.props" />
+</Project>

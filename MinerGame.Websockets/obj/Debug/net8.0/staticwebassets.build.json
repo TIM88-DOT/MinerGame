@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "de43ePLMQLthneD7CBlDd36DFLbTsILJLbfTXp6qR3c=",
+  "Source": "MinerGame.API",
+  "BasePath": "_content/MinerGame.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
