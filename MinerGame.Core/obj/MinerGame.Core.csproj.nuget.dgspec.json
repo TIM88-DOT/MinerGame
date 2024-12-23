@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dell\\source\\repos\\MinerGame\\MinerGame.Core\\MinerGame.Core.csproj": {}
+    "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Core\\MinerGame.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dell\\source\\repos\\MinerGame\\MinerGame.Core\\MinerGame.Core.csproj": {
+    "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Core\\MinerGame.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dell\\source\\repos\\MinerGame\\MinerGame.Core\\MinerGame.Core.csproj",
+        "projectUniqueName": "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Core\\MinerGame.Core.csproj",
         "projectName": "MinerGame.Core",
-        "projectPath": "C:\\Users\\dell\\source\\repos\\MinerGame\\MinerGame.Core\\MinerGame.Core.csproj",
+        "projectPath": "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Core\\MinerGame.Core.csproj",
         "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dell\\source\\repos\\MinerGame\\MinerGame.Core\\obj\\",
+        "outputPath": "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

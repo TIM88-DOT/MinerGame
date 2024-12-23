@@ -1,6 +1,5 @@
 ﻿using MinerGame.Core.Enums;
 using MiningGame.Core.Models;
-using System;
 
 namespace MiningGame.Core.Services
 {
@@ -10,7 +9,8 @@ namespace MiningGame.Core.Services
 
         public MapService()
         {
-            _map = InitializeMap(10, 10);
+            // Create a map of 80 x 45
+            _map = InitializeMap(80, 45);
         }
 
         private Block[,] InitializeMap(int width, int height)
@@ -22,9 +22,18 @@ namespace MiningGame.Core.Services
             {
                 for (int y = 0; y < height; y++)
                 {
-                    var hasChest = random.NextDouble() > 0.8;
-                    var chest = hasChest ? new Chest(random.Next(10, 100), ChestType.Normal) : null;
-                    map[x, y] = new Block(random.Next(50, 150), hasChest, chest);
+                    // 10% chance to have a chest
+                    var hasChest = random.NextDouble() < 0.1;
+
+                    // Create a new chest if hasChest is true
+                    var chest = hasChest
+                        ? new Chest(random.Next(10, 100), ChestType.Normal)
+                        : null;
+
+                    // health is a random number between 1 and 50
+                    var health = random.Next(1, 51);
+
+                    map[x, y] = new Block(health, hasChest, chest);
                 }
             }
 
@@ -47,7 +56,8 @@ namespace MiningGame.Core.Services
                     int targetX = x + i;
                     int targetY = y + j;
 
-                    if (targetX >= 0 && targetX < _map.GetLength(0) && targetY >= 0 && targetY < _map.GetLength(1))
+                    if (targetX >= 0 && targetX < _map.GetLength(0) &&
+                        targetY >= 0 && targetY < _map.GetLength(1))
                     {
                         blocks.Add(_map[targetX, targetY]);
                     }

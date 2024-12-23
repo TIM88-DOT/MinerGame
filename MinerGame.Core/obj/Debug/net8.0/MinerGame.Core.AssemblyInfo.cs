@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MinerGame.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23cdec42e186115a7c53f5f530c84b3b11676a54")]
 [assembly: System.Reflection.AssemblyProductAttribute("MinerGame.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MinerGame.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

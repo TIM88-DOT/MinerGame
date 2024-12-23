@@ -10,3 +10,16 @@ C:\Users\dell\source\repos\MinerGame\MinerGame.Core\obj\Debug\net8.0\refint\Mine
 C:\Users\dell\source\repos\MinerGame\MinerGame.Core\obj\Debug\net8.0\MinerGame.Core.pdb
 C:\Users\dell\source\repos\MinerGame\MinerGame.Core\obj\Debug\net8.0\ref\MinerGame.Core.dll
 C:\Users\dell\source\repos\MinerGame\MinerGame.Core\obj\Debug\net8.0\MinerGame.Core.csproj.AssemblyReference.cache
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\bin\Debug\net8.0\MinerGame.Core.deps.json
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\bin\Debug\net8.0\MinerGame.Core.dll
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\bin\Debug\net8.0\MinerGame.Core.pdb
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\obj\Debug\net8.0\MinerGame.Core.csproj.AssemblyReference.cache
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\obj\Debug\net8.0\MinerGame.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\obj\Debug\net8.0\MinerGame.Core.AssemblyInfoInputs.cache
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\obj\Debug\net8.0\MinerGame.Core.AssemblyInfo.cs
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\obj\Debug\net8.0\MinerGame.Core.csproj.CoreCompileInputs.cache
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\obj\Debug\net8.0\MinerGame.Core.sourcelink.json
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\obj\Debug\net8.0\MinerGame.Core.dll
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\obj\Debug\net8.0\refint\MinerGame.Core.dll
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\obj\Debug\net8.0\MinerGame.Core.pdb
+C:\Users\dell\Documents\GitHub\MinerGame\MinerGame.Core\obj\Debug\net8.0\ref\MinerGame.Core.dll
