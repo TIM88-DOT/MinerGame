@@ -24,10 +24,13 @@ namespace MiningGame.WebSockets
         private readonly int _mapWidth;
         private readonly int _mapHeight;
 
+        // Remember the last move direction to reduce twitchy back-and-forth
+        private string _lastMoveDirection = null;
+
         public GameSessionManager()
         {
             _gameService = new GameService(_mapService);
-            _character = new Character("Miner", 100, 20, 1.5, 1, 5, 2.0);
+            _character = new Character("Miner", 100, 9999, 1.5, 1, 5, 2.0);
 
             // Initialize map dimensions
             var map = _mapService.GetMap();
@@ -35,8 +38,8 @@ namespace MiningGame.WebSockets
             _mapHeight = map.GetLength(1);
 
             // Set the character's initial position
-            _character.PositionX = _mapWidth / 2; // Center horizontally
-            _character.PositionY = _mapHeight / 2; // Center vertically
+            _character.PositionX = 7;
+            _character.PositionY = 7;
 
             Task.Run(() => GameLoop()).ContinueWith(task =>
             {
@@ -78,6 +81,7 @@ namespace MiningGame.WebSockets
             await SendMessage(webSocket, gameState);
             Console.WriteLine($"Player {sessionId} connected.");
         }
+
         public async Task HandleMessage(string sessionId, string message)
         {
             if (!_connectedClients.ContainsKey(sessionId)) return;
@@ -96,6 +100,7 @@ namespace MiningGame.WebSockets
                 Console.WriteLine($"Error handling message: {ex.Message}");
             }
         }
+
         private async Task GameLoop()
         {
             try
@@ -156,43 +161,119 @@ namespace MiningGame.WebSockets
 
         private void SimulateRandomAction()
         {
-            var randomValue = _random.Next(0, 2); // 0 = Move, 1 = PlaceBomb
+            // Look for any adjacent tile that is intact.
+            var adjacentIntactTile = GetAdjacentIntactTile();
 
-            if (randomValue == 0)
+            // If we found one and bomb is not on cooldown, place a bomb there.
+            if (adjacentIntactTile.HasValue && !_character.IsBombOnCooldown)
             {
-                var directions = new[] { "Up", "Down", "Left", "Right" };
-                var randomDirection = directions[_random.Next(directions.Length)];
-                ProcessAction(new GameAction { Type = "Move", Direction = randomDirection });
+                var (targetX, targetY) = adjacentIntactTile.Value;
+                Console.WriteLine($"Found an adjacent intact tile at ({targetX}, {targetY}), placing bomb...");
+
+                ProcessAction(new GameAction
+                {
+                    Type = "PlaceBomb",
+                    X = targetX,
+                    Y = targetY
+                });
             }
             else
             {
-                if (!_character.IsBombOnCooldown)
-                {
-                    ProcessAction(new GameAction { Type = "PlaceBomb", X = _character.PositionX, Y = _character.PositionY });
-                }
-                else
-                {
-                    Console.WriteLine("Bomb is on cooldown. Skipping bomb placement.");
-                }
+                // Otherwise, move (or skip if no valid moves).
+                MoveOrSkip();
             }
         }
 
-        private void ProcessAction(GameAction action)
+        /// <summary>
+        /// Returns the coordinates of an adjacent tile (Up/Down/Left/Right) 
+        /// that is still intact (i.e. IsDestroyed == false), or null if none exist.
+        /// </summary>
+        private (int X, int Y)? GetAdjacentIntactTile()
         {
-            switch (action.Type)
+            var map = _mapService.GetMap();
+
+            // Offsets for the four adjacent tiles
+            var neighbors = new (int offsetX, int offsetY)[]
             {
-                case "Move":
-                    HandleMovement(action.Direction);
-                    break;
+                (0, -1),  // Up
+                (0,  1),  // Down
+                (-1, 0),  // Left
+                (1,  0)   // Right
+            };
 
-                case "PlaceBomb":
-                    HandleBombPlacement(action.X, action.Y);
-                    break;
+            foreach (var (ox, oy) in neighbors)
+            {
+                int nx = _character.PositionX + ox;
+                int ny = _character.PositionY + oy;
 
-                default:
-                    Console.WriteLine($"Unknown action: {action.Type}");
-                    break;
+                // Check bounds
+                if (nx >= 0 && nx < _mapWidth && ny >= 0 && ny < _mapHeight)
+                {
+                    // If the neighbor is still intact, return it
+                    if (!map[nx, ny].IsDestroyed)
+                    {
+                        return (nx, ny);
+                    }
+                }
             }
+
+            // No adjacent intact tile found
+            return null;
+        }
+
+        private void MoveOrSkip()
+        {
+            var validMoves = GetValidMoves();
+            if (validMoves.Any())
+            {
+                // Shuffle the valid moves randomly
+                var shuffled = validMoves.OrderBy(_ => _random.Next()).ToList();
+
+                // Try to pick one that isn't the opposite of the last move
+                string chosenDirection = null;
+                foreach (var dir in shuffled)
+                {
+                    if (!IsOpposite(dir, _lastMoveDirection))
+                    {
+                        chosenDirection = dir;
+                        break;
+                    }
+                }
+
+                // If all moves are opposite or we didn't find a non-opposite,
+                // just pick the first valid one anyway
+                if (chosenDirection == null)
+                {
+                    chosenDirection = shuffled.First();
+                }
+
+                // Remember this move for the next time
+                _lastMoveDirection = chosenDirection;
+
+                // Perform the move
+                ProcessAction(new GameAction
+                {
+                    Type = "Move",
+                    Direction = chosenDirection
+                });
+            }
+            else
+            {
+                Console.WriteLine("No valid moves available. Skipping turn.");
+            }
+        }
+
+        /// <summary>
+        /// Checks whether two directions are opposites, e.g. "Up" vs "Down".
+        /// </summary>
+        private bool IsOpposite(string dir1, string dir2)
+        {
+            if (dir1 == null || dir2 == null) return false;
+
+            return (dir1 == "Up" && dir2 == "Down")
+                || (dir1 == "Down" && dir2 == "Up")
+                || (dir1 == "Left" && dir2 == "Right")
+                || (dir1 == "Right" && dir2 == "Left");
         }
 
         private void HandleMovement(string direction)
@@ -208,8 +289,12 @@ namespace MiningGame.WebSockets
                 case "Right": newX++; break;
             }
 
-            // Check bounds
-            if (newX >= 0 && newX < _mapWidth && newY >= 0 && newY < _mapHeight)
+            var map = _mapService.GetMap();
+
+            // Now we allow movement *onto* a tile if it *is* destroyed
+            if (newX >= 0 && newX < _mapWidth &&
+                newY >= 0 && newY < _mapHeight &&
+                map[newX, newY].IsDestroyed)
             {
                 _character.PositionX = newX;
                 _character.PositionY = newY;
@@ -230,34 +315,97 @@ namespace MiningGame.WebSockets
             }
             else
             {
-                Console.WriteLine($"Invalid move {direction}: Out of bounds.");
+                Console.WriteLine($"Invalid move {direction}: Cannot move through intact blocks or out of bounds.");
             }
+        }
+
+        private List<string> GetValidMoves()
+        {
+            var validMoves = new List<string>();
+            var map = _mapService.GetMap();
+
+            bool IsTilePassable(int x, int y) => map[x, y].IsDestroyed;
+
+            // Up
+            if (_character.PositionY > 0 &&
+                IsTilePassable(_character.PositionX, _character.PositionY - 1))
+            {
+                validMoves.Add("Up");
+            }
+            // Down
+            if (_character.PositionY < _mapHeight - 1 &&
+                IsTilePassable(_character.PositionX, _character.PositionY + 1))
+            {
+                validMoves.Add("Down");
+            }
+            // Left
+            if (_character.PositionX > 0 &&
+                IsTilePassable(_character.PositionX - 1, _character.PositionY))
+            {
+                validMoves.Add("Left");
+            }
+            // Right
+            if (_character.PositionX < _mapWidth - 1 &&
+                IsTilePassable(_character.PositionX + 1, _character.PositionY))
+            {
+                validMoves.Add("Right");
+            }
+
+            return validMoves;
         }
 
         private void HandleBombPlacement(int x, int y)
         {
-            Console.WriteLine($"Character places bomb at ({x}, {y})");
+            var map = _mapService.GetMap();
 
-            var affectedBlocks = _gameService.PlaceBomb(_character, x, y);
-
-            // Count destroyed blocks and chests
-            var destroyedBlocks = affectedBlocks.Count(b => b.IsDestroyed);
-            var collectedChests = affectedBlocks.Count(b => b.HasChest && b.IsDestroyed);
-
-            _destroyedBlocksCount += destroyedBlocks;
-            _collectedChestCount += collectedChests;
-
-            BroadcastGameUpdate(new
+            // Check if there is a block to destroy
+            if (!map[x, y].IsDestroyed)
             {
-                Event = "BombPlaced",
-                Data = new
+                Console.WriteLine($"Character places bomb at ({x}, {y})");
+
+                var affectedBlocks = _gameService.PlaceBomb(_character, x, y);
+
+                // Count destroyed blocks and chests
+                var destroyedBlocks = affectedBlocks.Count(b => b.IsDestroyed);
+                var collectedChests = affectedBlocks.Count(b => b.HasChest && b.IsDestroyed);
+
+                _destroyedBlocksCount += destroyedBlocks;
+                _collectedChestCount += collectedChests;
+
+                BroadcastGameUpdate(new
                 {
-                    AffectedBlocks = affectedBlocks.Select(b => new { b.Health, b.HasChest, b.IsDestroyed }),
-                    UpdatedCharacter = new { _character.Stamina },
-                    DestroyedBlocksCount = _destroyedBlocksCount,
-                    CollectedChestCount = _collectedChestCount
-                }
-            });
+                    Event = "BombPlaced",
+                    Data = new
+                    {
+                        AffectedBlocks = affectedBlocks.Select(b => new { b.Health, b.HasChest, b.IsDestroyed }),
+                        UpdatedCharacter = new { _character.Stamina },
+                        DestroyedBlocksCount = _destroyedBlocksCount,
+                        CollectedChestCount = _collectedChestCount
+                    }
+                });
+            }
+            else
+            {
+                Console.WriteLine($"Cannot place bomb at ({x}, {y}): No block to destroy.");
+            }
+        }
+
+        private void ProcessAction(GameAction action)
+        {
+            switch (action.Type)
+            {
+                case "Move":
+                    HandleMovement(action.Direction);
+                    break;
+
+                case "PlaceBomb":
+                    HandleBombPlacement(action.X, action.Y);
+                    break;
+
+                default:
+                    Console.WriteLine($"Unknown action: {action.Type}");
+                    break;
+            }
         }
 
         private bool IsAllBlocksDestroyed()
@@ -291,6 +439,9 @@ namespace MiningGame.WebSockets
                     {
                         var bytes = Encoding.UTF8.GetBytes(message);
                         await client.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+
+                        // Print ASCII map to console
+                        Console.WriteLine(GenerateAsciiMap());
                     }
                     catch (Exception ex)
                     {
@@ -304,6 +455,7 @@ namespace MiningGame.WebSockets
                 }
             }
         }
+
         private async Task SendMessage(WebSocket webSocket, GameMessage message)
         {
             if (webSocket.State == WebSocketState.Open)
@@ -320,6 +472,7 @@ namespace MiningGame.WebSockets
                 }
             }
         }
+
         public async Task RemovePlayerFromSession(string sessionId)
         {
             if (_connectedClients.TryGetValue(sessionId, out var webSocket))
@@ -332,6 +485,7 @@ namespace MiningGame.WebSockets
                 _connectedClients.Remove(sessionId);
             }
         }
+
         private void EndGame(string reason)
         {
             Console.WriteLine($"Game Over: {reason}");
@@ -347,6 +501,38 @@ namespace MiningGame.WebSockets
                     CollectedChestCount = _collectedChestCount
                 }
             });
+        }
+
+        private string GenerateAsciiMap()
+        {
+            var map = _mapService.GetMap();
+            var builder = new StringBuilder();
+
+            for (int y = 0; y < map.GetLength(1); y++)
+            {
+                for (int x = 0; x < map.GetLength(0); x++)
+                {
+                    if (x == _character.PositionX && y == _character.PositionY)
+                    {
+                        builder.Append("P "); // Player
+                    }
+                    else if (map[x, y].IsDestroyed)
+                    {
+                        builder.Append("  "); // Empty space for destroyed blocks
+                    }
+                    else if (map[x, y].HasChest)
+                    {
+                        builder.Append("C "); // Chest
+                    }
+                    else
+                    {
+                        builder.Append("# "); // Block
+                    }
+                }
+                builder.AppendLine(); // New line for each row
+            }
+
+            return builder.ToString();
         }
     }
 }

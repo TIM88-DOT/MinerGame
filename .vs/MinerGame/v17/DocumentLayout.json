@@ -7,20 +7,12 @@
       "RelativeMoniker": "D:0:0:{68EEBECF-DB30-4ABC-8784-AA317DC1B897}|MinerGame.Websockets\\MinerGame.API.csproj|solutionrelative:minergame.websockets\\websockets\\gamesessionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{68EEBECF-DB30-4ABC-8784-AA317DC1B897}|MinerGame.Websockets\\MinerGame.API.csproj|c:\\users\\dell\\documents\\github\\minergame\\minergame.websockets\\websockets\\websockethandlerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{68EEBECF-DB30-4ABC-8784-AA317DC1B897}|MinerGame.Websockets\\MinerGame.API.csproj|solutionrelative:minergame.websockets\\websockets\\websockethandlerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8DD7A403-5F57-4193-9014-A33180B7CD70}|MinerGame.Core\\MinerGame.Core.csproj|c:\\users\\dell\\documents\\github\\minergame\\minergame.core\\models\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8DD7A403-5F57-4193-9014-A33180B7CD70}|MinerGame.Core\\MinerGame.Core.csproj|solutionrelative:minergame.core\\models\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{68EEBECF-DB30-4ABC-8784-AA317DC1B897}|MinerGame.Websockets\\MinerGame.API.csproj|c:\\users\\dell\\documents\\github\\minergame\\minergame.websockets\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{68EEBECF-DB30-4ABC-8784-AA317DC1B897}|MinerGame.Websockets\\MinerGame.API.csproj|solutionrelative:minergame.websockets\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8DD7A403-5F57-4193-9014-A33180B7CD70}|MinerGame.Core\\MinerGame.Core.csproj|c:\\users\\dell\\documents\\github\\minergame\\minergame.core\\services\\mapservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8DD7A403-5F57-4193-9014-A33180B7CD70}|MinerGame.Core\\MinerGame.Core.csproj|solutionrelative:minergame.core\\services\\mapservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{68EEBECF-DB30-4ABC-8784-AA317DC1B897}|MinerGame.Websockets\\MinerGame.API.csproj|c:\\users\\dell\\documents\\github\\minergame\\minergame.websockets\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{68EEBECF-DB30-4ABC-8784-AA317DC1B897}|MinerGame.Websockets\\MinerGame.API.csproj|solutionrelative:minergame.websockets\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,45 +22,19 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "WebSocketHandlerService.cs",
-              "DocumentMoniker": "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Websockets\\Websockets\\WebSocketHandlerService.cs",
-              "RelativeDocumentMoniker": "MinerGame.Websockets\\Websockets\\WebSocketHandlerService.cs",
-              "ToolTip": "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Websockets\\Websockets\\WebSocketHandlerService.cs",
-              "RelativeToolTip": "MinerGame.Websockets\\Websockets\\WebSocketHandlerService.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAIAzwC4AAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-23T15:58:40.88Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "MapService.cs",
               "DocumentMoniker": "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Core\\Services\\MapService.cs",
               "RelativeDocumentMoniker": "MinerGame.Core\\Services\\MapService.cs",
               "ToolTip": "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Core\\Services\\MapService.cs",
               "RelativeToolTip": "MinerGame.Core\\Services\\MapService.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAACMAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAADEAAAAAAAAAAAAAAD0AAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-23T15:30:15.179Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Character.cs",
-              "DocumentMoniker": "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Core\\Models\\Character.cs",
-              "RelativeDocumentMoniker": "MinerGame.Core\\Models\\Character.cs",
-              "ToolTip": "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Core\\Models\\Character.cs",
-              "RelativeToolTip": "MinerGame.Core\\Models\\Character.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA4AAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-23T14:39:05.487Z",
+              "WhenOpened": "2024-12-24T09:31:34.56Z",
               "EditorCaption": ""
             },
             {
@@ -79,14 +45,14 @@
               "RelativeDocumentMoniker": "MinerGame.Websockets\\Websockets\\GameSessionManager.cs",
               "ToolTip": "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Websockets\\Websockets\\GameSessionManager.cs",
               "RelativeToolTip": "MinerGame.Websockets\\Websockets\\GameSessionManager.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAcwGEAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAYCAAAAAAAAAAAAABoCAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-23T14:16:32.867Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\dell\\Documents\\GitHub\\MinerGame\\MinerGame.Websockets\\Program.cs",
               "RelativeDocumentMoniker": "MinerGame.Websockets\\Program.cs",

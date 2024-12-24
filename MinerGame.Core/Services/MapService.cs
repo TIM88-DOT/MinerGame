@@ -9,8 +9,8 @@ namespace MiningGame.Core.Services
 
         public MapService()
         {
-            // Create a map of 80 x 45
-            _map = InitializeMap(80, 45);
+            // Create a map of 15 x 15
+            _map = InitializeMap(15, 15);
         }
 
         private Block[,] InitializeMap(int width, int height)
